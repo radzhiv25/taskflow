@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskCard from '../components/TaskCard';
+import API_URL from '../config';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -11,7 +12,7 @@ const Dashboard = () => {
   // Fetch all tasks
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/tasks', {
+      const response = await axios.get(`${API_URL}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(response.data);
@@ -30,8 +31,8 @@ const Dashboard = () => {
 
     try {
       const url = editTaskId
-        ? `http://localhost:5001/tasks/${editTaskId}`
-        : 'http://localhost:5001/tasks';
+        ? `${API_URL}${editTaskId}`
+        : `${API_URL}/tasks`;
       const method = editTaskId ? 'put' : 'post';
 
       await axios[method](url, newTask, {
